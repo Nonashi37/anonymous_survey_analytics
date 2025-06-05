@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🚀 Analytics Test Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .metric { display: inline-block; margin: 10px; padding: 15px; background: #007bff; color: white; border-radius: 5px; }
+        .professor { border-left: 4px solid #28a745; }
+        .department { border-left: 4px solid #ffc107; }
+        h1 { color: #333; }
+        .rating { font-weight: bold; color: #007bff; }
+        .sentiment { font-style: italic; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <h1>🎯 Analytics Dashboard - LIVE DATA!</h1>
+
+    <div class="card">
+        <h2>📊 Quick Stats</h2>
+        <div class="metric">Total Professors: {{ total_professors }}</div>
+        <div class="metric">Recent Analytics: {{ recent_analytics.count }}</div>
+    </div>
+
+    <div class="card">
+        <h2>🏆 Top Performing Professors Today</h2>
+        {% for prof in top_professors %}
+        <div class="professor">
+            <h3>{{ prof.professor_name }}</h3>
+            <p><span class="rating">Rating: {{ prof.average_rating }}/5</span> |
+               Responses: {{ prof.total_responses }} |
+               <span class="sentiment">Sentiment: {{ prof.sentiment_score }}</span></p>
+            <p><strong>Keywords:</strong> {{ prof.common_keywords|join:", " }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <h2>🏢 Department Performance</h2>
+        {% for dept in departments %}
+        <div class="department">
+            <h3>{{ dept.department }}</h3>
+            <p><span class="rating">Rating: {{ dept.average_rating }}/5</span> |
+               Responses: {{ dept.total_responses }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <h2>📈 Daily Trends (Last 10 Days)</h2>
+        {% for day in recent_analytics %}
+        <p><strong>{{ day.date }}:</strong>
+           Avg Rating: {{ day.average_rating|floatformat:2 }} |
+           Responses: {{ day.total_responses }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
